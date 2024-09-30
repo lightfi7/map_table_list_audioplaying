@@ -19,10 +19,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Navigate to="/Grammatik" />
+        element: <HomePage />
       },
       {
-        path: "/Grammatik",
+        path: "/:slug",
         element: <HomePage />
       },
       // {
