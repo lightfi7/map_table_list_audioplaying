@@ -22,21 +22,21 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: "/:slug",
+        path: "/:categories",
         element: <HomePage />
       },
-      // {
-      //     path: "/word/:wordId",
-      //     element: <WordVariants />,
-      // },
+      {
+        path: "/slug/:slug",
+        element: <HomePage />
+      },
       {
         path: "/:subcategory/:pagenumber",
         element: <PageTitle />,
       },
-      {
-        path: "/:categories",
-        element: <NewCategoriesList />,
-      },
+      // {
+      //   path: "/:categories",
+      //   element: <NewCategoriesList />,
+      // },
     ]
   },
 ]);
