@@ -33,11 +33,14 @@ const PageTitle: React.FC = () => {
     const [currentAudioId, setCurrentAudioId] = useState<number | null>(null);
     const navigate = useNavigate();
 
+
+
     useEffect(() => {
         dispatch(getColor());
         CategoriesServices.getPageTitle(pagenumber)
             .then((data) => {
                 setPageTitleData(data.data);
+                
             })
             .catch(() => alert("Error fetching"));
     }, [pagenumber]);
