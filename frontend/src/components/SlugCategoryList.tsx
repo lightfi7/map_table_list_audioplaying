@@ -61,7 +61,7 @@ const SlugCategoryList: React.FC = () => {
                 setIsPlaying(true);
                 var ap = new Audio('');
                 setAudio(ap);
-                ap.src = `http://192.168.130.33:8001/file/${audioName}.flac`
+                ap.src = `http://176.10.111.19:8001/file/${audioName}.flac`
                 ap.addEventListener('loadeddata', () => {
                     ap.play();
                 });
