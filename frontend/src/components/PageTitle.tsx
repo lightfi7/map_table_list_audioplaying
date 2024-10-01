@@ -152,7 +152,7 @@ const PageTitle: React.FC = () => {
                             <p className="text-sm text-gray-600">{pageTitle?.location} | {pageTitle?.cohort}</p>
                         </div>
                         <img className="h-10 w-10 text-gray-700 cursor-pointer" src={playIcon} alt="Play Button" onClick={(e) => {
-                            //e.stopPropagation();
+                            e.stopPropagation();
                             setCurrentAudioId(pageTitle.ID);
                             setAudioName(pageTitle.audio.slice(0, -4));
                             fetchAudio(pageTitle.audio.slice(0, -4))
