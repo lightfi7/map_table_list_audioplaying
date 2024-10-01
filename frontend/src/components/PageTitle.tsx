@@ -30,10 +30,10 @@ const PageTitle: React.FC = () => {
     const [pageTitleData, setPageTitleData] = useState<PageTitle[]>([]);
     const [audioName, setAudioName] = useState<string | null>(null);
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [audioUrl, setAudioUrl] = useState('');
     const [progress, setProgress] = useState(0);
     const [currentAudioId, setCurrentAudioId] = useState<number | null>(null);
-    const audioRef = useRef<HTMLAudioElement | null>(new Audio(""));
+    const audioRef = useRef<HTMLAudioElement | null>(new Audio(''));
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -49,27 +49,25 @@ const PageTitle: React.FC = () => {
     const fetchAudio = async (audioName: string) => {
         if (audioName) {
             setProgress(0);
-            audioRef.current!.currentTime = 0;
             try {
-                const response = await axios.get(`https://audio.dialektatlas.ch/api/v1/audios/${audioName}`, {
-                    responseType: 'blob',
+                var ap = new Audio("")
+                setAudio(ap);
+                ap.src = `http://192.168.130.33:8001/file/${audioName}.flac`
+                ap.addEventListener('loadeddata', () => {
+                    alert('Loaded');
+                    ap.play();
                 });
-                const audioUrl = URL.createObjectURL(response.data);
-                audioRef.current!.src = audioUrl
-                setAudio(audioRef.current);
-                audioRef.current!.addEventListener('timeupdate', () => {
-                    if (audioRef.current!.duration)
-                        setProgress((audioRef.current!.currentTime / audioRef.current!.duration) * 100);
+                ap.addEventListener('timeupdate', () => {
+                    setProgress((ap.currentTime / ap.duration) * 100);
                 });
-
-                audioRef.current!.addEventListener('ended', () => {
+                ap.addEventListener('ended', () => {
                     setProgress(0);
                     setCurrentAudioId(null);
                 });
-
-                audioRef.current!.play();
+                ap.load()
                 setError('');
             } catch (error) {
+                console.error('Error playing audio:', error);
                 setError(error?.message)
             }
         }
@@ -129,7 +127,6 @@ const PageTitle: React.FC = () => {
     };
     return (
         <div>
-            {error}
             <div
                 style={{ backgroundColor: data?.color }}
                 className={`inline-flex justify-between items-center w-full px-4 py-4 bg-[${data?.color}]  text-lg font-bold text-gray-700 focus:outline-none`}>
@@ -152,10 +149,11 @@ const PageTitle: React.FC = () => {
                             <p className="text-sm text-gray-600">{pageTitle?.location} | {pageTitle?.cohort}</p>
                         </div>
                         <img className="h-10 w-10 text-gray-700 cursor-pointer" src={playIcon} alt="Play Button" onClick={(e) => {
-                            e.stopPropagation();
+                            //e.stopPropagation();
                             setCurrentAudioId(pageTitle.ID);
                             setAudioName(pageTitle.audio.slice(0, -4));
                             fetchAudio(pageTitle.audio.slice(0, -4))
+
                             // Update the URL without reloading the page
                             // window.history.pushState({}, '', `/page/${pagenumber}/${pageTitle.audio}`);
                         }} />

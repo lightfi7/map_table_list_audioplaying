@@ -53,29 +53,25 @@ const SlugCategoryList: React.FC = () => {
         })
     }, [slug]);
 
-
     const fetchAudio = async (audioName: string) => {
         if (audioName) {
-            audioRef.current!.currentTime = 0;
             setProgress(0);
             try {
-                const response = await axios.get(`https://audio.dialektatlas.ch/api/v1/audios/${audioName}`, {
-                    responseType: 'blob'
+                var ap = new Audio("")
+                setAudio(ap);
+                ap.src = `http://192.168.130.33:8001/file/${audioName}.flac`
+                ap.addEventListener('loadeddata', () => {
+                    alert('Loaded');
+                    ap.play();
                 });
-                const audioUrl = URL.createObjectURL(response.data);
-                audioRef.current!.src = audioUrl
-                setAudio(audioRef.current);
-                audioRef.current!.addEventListener('timeupdate', () => {
-                    if (audioRef.current!.duration)
-                    setProgress((audioRef.current!.currentTime / audioRef.current!.duration) * 100);
+                ap.addEventListener('timeupdate', () => {
+                    setProgress((ap.currentTime / ap.duration) * 100);
                 });
-
-                audioRef.current!.addEventListener('ended', () => {
+                ap.addEventListener('ended', () => {
                     setProgress(0);
                     setCurrentAudioId(null);
                 });
-
-                audioRef.current!.play();
+                ap.load()
                 setError('');
             } catch (error) {
                 console.error('Error playing audio:', error);
