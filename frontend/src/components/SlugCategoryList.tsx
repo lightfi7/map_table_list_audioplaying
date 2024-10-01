@@ -54,42 +54,71 @@ const SlugCategoryList: React.FC = () => {
     }, [slug]);
 
 
+    const fetchAudio = async (audioName: string) => {
+        if (audioName) {
+            audioRef.current!.currentTime = 0;
+            setProgress(0);
+            try {
+                const response = await axios.get(`https://audio.dialektatlas.ch/api/v1/audios/${audioName}`, {
+                    responseType: 'blob'
+                });
+                const audioUrl = URL.createObjectURL(response.data);
+                audioRef.current!.src = audioUrl
+                setAudio(audioRef.current);
+                audioRef.current!.addEventListener('timeupdate', () => {
+                    if (audioRef.current!.duration)
+                    setProgress((audioRef.current!.currentTime / audioRef.current!.duration) * 100);
+                });
+
+                audioRef.current!.addEventListener('ended', () => {
+                    setProgress(0);
+                    setCurrentAudioId(null);
+                });
+
+                audioRef.current!.play();
+                setError('');
+            } catch (error) {
+                console.error('Error playing audio:', error);
+                setError(error?.message)
+            }
+        }
+    };
     // console.log(audioName)
 
-    useEffect(() => {
-        const fetchAudio = async () => {
-            if (audioName) {
-                try {
-                    const response = await axios.get(`http://176.10.111.19:8001/api/v1/audios/${audioName}`, {
-                        responseType: 'blob'
-                    });
-                    const audioUrl = URL.createObjectURL(response.data);
-                    const newAudio = new Audio(audioUrl);
-                    setAudio(newAudio);
-                    audioRef.current = newAudio;
+    // useEffect(() => {
+    //     const fetchAudio = async () => {
+    //         if (audioName) {
+    //             try {
+    //                 const response = await axios.get(`http://176.10.111.19:8001/api/v1/audios/${audioName}`, {
+    //                     responseType: 'blob'
+    //                 });
+    //                 const audioUrl = URL.createObjectURL(response.data);
+    //                 const newAudio = new Audio(audioUrl);
+    //                 setAudio(newAudio);
+    //                 audioRef.current = newAudio;
 
-                    newAudio.addEventListener('timeupdate', () => {
-                        setProgress((newAudio.currentTime / newAudio.duration) * 100);
-                    });
+    //                 newAudio.addEventListener('timeupdate', () => {
+    //                     setProgress((newAudio.currentTime / newAudio.duration) * 100);
+    //                 });
 
-                    newAudio.addEventListener('ended', () => {
-                        // setIsPlaying(false);
-                        setProgress(0);
-                        setCurrentAudioId(null);
-                    });
+    //                 newAudio.addEventListener('ended', () => {
+    //                     // setIsPlaying(false);
+    //                     setProgress(0);
+    //                     setCurrentAudioId(null);
+    //                 });
 
-                    newAudio.play();
-                    setError('');
-                    // setIsPlaying(true);
-                } catch (error) {
-                    console.error('Error playing audio:', error);
-                    setError(error?.message)
-                }
-            }
-        };
+    //                 newAudio.play();
+    //                 setError('');
+    //                 // setIsPlaying(true);
+    //             } catch (error) {
+    //                 console.error('Error playing audio:', error);
+    //                 setError(error?.message)
+    //             }
+    //         }
+    //     };
 
-        fetchAudio();
-    }, [audioName]);
+    //     fetchAudio();
+    // }, [audioName]);
 
     // const togglePlayPause = () => {
     //     if (audio) {
@@ -134,8 +163,9 @@ const SlugCategoryList: React.FC = () => {
                         </div>
                         <img className="h-10 w-10 text-gray-700 cursor-pointer" src={playIcon} alt="Play Button" onClick={(e) => {
                             e.stopPropagation();
-                            setAudioName(pageTitle.audio.slice(0, -4));
                             setCurrentAudioId(pageTitle.ID);
+                            setAudioName(pageTitle.audio.slice(0, -4));
+                            fetchAudio(pageTitle.audio.slice(0, -4))
                             // Update the URL without reloading the page
                             // window.history.pushState({}, '', `/page/${pagenumber}/${pageTitle.audio}`);
                         }} />
