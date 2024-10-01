@@ -24,16 +24,14 @@ interface PageTitle {
 const PageTitle: React.FC = () => {
     const { pagenumber, subcategory } = useParams<{ pagenumber: string }>();
     const [error, setError] = useState<string | null>(null);
-
+    const [isPlaying, setIsPlaying] = useState(false);
     const dispatch = useDispatch<any>();
     const data = useSelector((state: any) => state.theme);
     const [pageTitleData, setPageTitleData] = useState<PageTitle[]>([]);
     const [audioName, setAudioName] = useState<string | null>(null);
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-    const [audioUrl, setAudioUrl] = useState('');
     const [progress, setProgress] = useState(0);
     const [currentAudioId, setCurrentAudioId] = useState<number | null>(null);
-    const audioRef = useRef<HTMLAudioElement | null>(new Audio(''));
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,21 +46,27 @@ const PageTitle: React.FC = () => {
 
     const fetchAudio = async (audioName: string) => {
         if (audioName) {
+            if (isPlaying) return;
             setProgress(0);
             try {
-                var ap = new Audio("")
+                setIsPlaying(true);
+                var ap = new Audio('');
                 setAudio(ap);
                 ap.src = `http://192.168.130.33:8001/file/${audioName}.flac`
                 ap.addEventListener('loadeddata', () => {
-                    alert('Loaded');
                     ap.play();
                 });
                 ap.addEventListener('timeupdate', () => {
                     setProgress((ap.currentTime / ap.duration) * 100);
                 });
                 ap.addEventListener('ended', () => {
+                    setIsPlaying(false);
                     setProgress(0);
                     setCurrentAudioId(null);
+                });
+                ap.addEventListener('error', () => {
+                    setIsPlaying(false);
+                    setError('Failed to load audio');
                 });
                 ap.load()
                 setError('');
