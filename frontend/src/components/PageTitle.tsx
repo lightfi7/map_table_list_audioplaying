@@ -1,9 +1,8 @@
-import { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { CategoriesServices } from "../services/CategoriesServices";
 import leftarrow from '../assets/left-arrow.svg';
 import playIcon from '../assets/play-icon.svg';
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getColor } from "../redux/themeSlice";
 
@@ -185,13 +184,13 @@ const PageTitle: React.FC = () => {
             <div className="text-gray-500">
                 <div className="flex justify-between items-center">
                     <button onClick={() => navigate(`/${subcategory}/${parseInt(pagenumber) - 2}`)} className="cursor-pointer">
-                        Previous Page
+                    Vorherige Seite
                     </button>
                     <div>
                         {pagenumber}
                     </div>
                     <button onClick={() => navigate(`/${subcategory}/${parseInt(pagenumber) + 2}`)} className="cursor-pointer">
-                        Next Page
+                    Nächste Seite
                     </button>
                 </div>
 

@@ -195,13 +195,13 @@ const SlugCategoryList: React.FC = () => {
             <div className="text-gray-500">
                 <div className="flex justify-between items-center">
                     <button onClick={() => navigate(`/${subcategory}/${parseInt(pagenumber) - 2}`)} className="cursor-pointer">
-                        Previous Page
+                        Vorherige Seite
                     </button>
                     <div>
                         {pagenumber}
                     </div>
                     <button onClick={() => navigate(`/${subcategory}/${parseInt(pagenumber) + 2}`)} className="cursor-pointer">
-                        Next Page
+                        Nächste Seite
                     </button>
                 </div>
 
