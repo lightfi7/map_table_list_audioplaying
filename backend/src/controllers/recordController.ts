@@ -31,6 +31,7 @@ export const pagetitleController = async (req: Request, res: Response) => {
         const pageNumber = parseInt(req.query.pageNumber as string);
 
         const records = await recordModel.find({ page: pageNumber }).sort({ word: 1 });
+        records.sort((a: any, b: any) => a.word.localeCompare(b.word, 'de', { sensitivity: 'base' }))
         const uniqueRecords = Array.from(new Map(records.map(item => [item.variant, item])).values());
         res.status(200).json({
             data: records,
