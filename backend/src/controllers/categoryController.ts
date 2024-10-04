@@ -78,6 +78,7 @@ export const getSubcategories = async (req: Request, res: Response) => {
     try {
         // console.log('records')
         const category = req.params.category;
+        console.log(category);
         const categories = await categoryModel.find({ Maincategory: category }).sort({ Subcategory: 1 });
         res.status(200).json(categories);
     } catch (error) {
