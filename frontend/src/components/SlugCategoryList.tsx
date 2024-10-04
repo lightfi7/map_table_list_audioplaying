@@ -59,7 +59,6 @@ const SlugCategoryList: React.FC = () => {
             setMaincategory(data?.Maincategory)
             CategoriesServices.getPageTitle(data?.Pagenumber)
                 .then((res) => {
-                    res.data.sort((a: any, b: any) => a.word.localeCompare(b.word, 'de', { sensitivity: 'base' }))
                     setPageTitleData(res.data)
 
                     if (Number(data.Pagenumber) <= 142) {

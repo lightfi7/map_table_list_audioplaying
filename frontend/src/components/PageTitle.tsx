@@ -39,7 +39,6 @@ const PageTitle: React.FC = () => {
         dispatch(getColor());
         CategoriesServices.getPageTitle(pagenumber)
             .then((data) => {
-                data.data.sort((a: any, b: any) => a.word.localeCompare(b.word, 'de', { sensitivity: 'base' }))
                 setPageTitleData(data.data)
             })
             .catch(() => console.log("Error fetching"));
