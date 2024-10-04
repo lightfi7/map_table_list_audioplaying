@@ -80,7 +80,7 @@ const SlugCategoryList: React.FC = () => {
                         setTextColor(textColors[4]);
 
                     }
-                    else (Number(data.Pagenumber) <= 358) {
+                    else {
                         setColor(colors[5]);
                         setTextColor(textColors[5]);
                     }

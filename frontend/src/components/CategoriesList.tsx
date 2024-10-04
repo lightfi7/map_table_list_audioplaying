@@ -103,7 +103,7 @@ const CategoriesList: React.FC = (props: any) => {
                                     color = colors[4];
                                     textColor = textColors[4];
                                 }
-                                else (Number(data.Pagenumber) <= 358) {
+                                else {
                                     color = colors[5];
                                     textColor = textColors[5];
                                 }
