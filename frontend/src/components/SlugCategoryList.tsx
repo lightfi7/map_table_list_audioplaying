@@ -22,11 +22,11 @@ interface PageTitle {
     audio: string;
 }
 const colors: string[] = [
-    'magenta', '#ffdd62', '#e11325', '#71cdf1', '#f08757', '#f08757', 'blue', 'purple', 'pink', 'brown'
+    'magenta', '#ffdd62', '#e11325', '#71cdf1', '#f08757', '#f08757', '#0a998a', 'blue', 'purple', 'pink', 'brown'
 ];
 
 const textColors: string[] = [
-    'normal', '#8d8070', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'
+    'normal', '#8d8070', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'
 ]
 
 const SlugCategoryList: React.FC = () => {
@@ -79,6 +79,10 @@ const SlugCategoryList: React.FC = () => {
                         setColor(colors[4]);
                         setTextColor(textColors[4]);
 
+                    }
+                    else (Number(data.Pagenumber) <= 358) {
+                        setColor(colors[5]);
+                        setTextColor(textColors[5]);
                     }
                 })
                 .catch(() => alert("Error fetching"));
