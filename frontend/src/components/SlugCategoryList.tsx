@@ -123,7 +123,6 @@ const SlugCategoryList: React.FC = () => {
 
     const fetchAudio = async (audioName: string) => {
         if (audioName) {
-            if (isPlaying) return;
             setProgress(0);
             try {
                 setIsPlaying(true);
@@ -153,7 +152,7 @@ const SlugCategoryList: React.FC = () => {
                     <div
                         style={{ backgroundColor: data?.color }}
                         className={`inline-flex justify-between items-center w-full px-4 py-4 bg-[${data?.color}]  text-lg font-bold text-gray-700 focus:outline-none`}>
-                        <img className="h-6 w-6 text-gray-700 cursor-pointer" src={leftarrow} alt="Left Arrow" onClick={() =>{
+                        <img className="h-6 w-6 text-gray-700 cursor-pointer" src={leftarrow} alt="Left Arrow" onClick={() => {
                             navigate(`/${subcategory}/${pagenumber}`);
                         }} />
                         <div className="flex-grow text-center text-xl">

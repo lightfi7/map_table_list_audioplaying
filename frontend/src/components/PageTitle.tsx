@@ -62,7 +62,7 @@ const PageTitle: React.FC = () => {
             ap.removeEventListener('ended', ended);
             ap.removeEventListener('error', error);
         }
-    }, [])
+    }, [audio])
 
     useEffect(() => {
         dispatch(getColor());
@@ -77,7 +77,6 @@ const PageTitle: React.FC = () => {
 
     const fetchAudio = async (audioName: string) => {
         if (audioName) {
-            if (isPlaying) return;
             var ap = audio;
             ap.pause();
             setProgress(0);
