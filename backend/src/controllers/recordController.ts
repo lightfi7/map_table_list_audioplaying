@@ -19,7 +19,7 @@ export const getRecords = async (req: Request, res: Response) => {
     try {
         // console.log('records')
         const records = await recordModel.find().sort({ word: 1 });
-        records.sort((a: any, b: any) => a.variant.localeCompare(b.variant, 'de', { sensitivity: 'base' }))
+        records.sort((a: any, b: any) => a.variant.localeCompare(b.variant, 'de', { sensitivity: 'variant' }))
         console.log(records)
         res.status(200).json(records);
     } catch (error) {
@@ -33,7 +33,7 @@ export const pagetitleController = async (req: Request, res: Response) => {
         const pageNumber = parseInt(req.query.pageNumber as string);
 
         const records = await recordModel.find({ page: pageNumber }).sort({ word: 1 });
-        records.sort((a: any, b: any) => a.variant.localeCompare(b.variant, 'de', { sensitivity: 'base' }))
+        records.sort((a: any, b: any) => a.variant.localeCompare(b.variant, 'de', { sensitivity: 'variant' }))
         console.log(records)
         const uniqueRecords = Array.from(new Map(records.map(item => [item.variant, item])).values());
         res.status(200).json({
