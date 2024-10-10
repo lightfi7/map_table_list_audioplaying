@@ -185,14 +185,27 @@ const PageTitle: React.FC = () => {
                                 <span className="font-bold text-xl">{pageTitle?.variant}</span>
                                 <p className="text-sm text-gray-600">{pageTitle?.location} | {pageTitle?.cohort}</p>
                             </div>
-                            <img className="h-10 w-10 text-gray-700 cursor-pointer" src={playIcon} alt="Play Button" onClick={(e) => {
+                            <button className="whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground px-4 py-2 w-12 h-12 rounded-full bg-[#777] hover:bg-[#eeeeee] focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex items-center justify-center "
+                                aria-label={isPlaying ? 'Pause' : 'Play'}>
+                                {isPlaying && currentAudioId == pageTitle.ID ? (
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="6" y="4" width="4" height="16" fill="white" />
+                                        <rect x="14" y="4" width="4" height="16" fill="white" />
+                                    </svg>
+                                ) : (
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 5V19L19 12L8 5Z" fill="white" />
+                                    </svg>
+                                )}
+                            </button>
+                            {/* <img className="h-10 w-10 text-gray-700 cursor-pointer" src={playIcon} alt="Play Button" onClick={(e) => {
                                 e.stopPropagation();
                                 setCurrentAudioId(pageTitle.ID);
                                 setAudioName(pageTitle.audio.slice(0, -4));
                                 fetchAudio(pageTitle.audio.slice(0, -4))
                                 // Update the URL without reloading the page
                                 // window.history.pushState({}, '', `/page/${pagenumber}/${pageTitle.audio}`);
-                            }} />
+                            }} /> */}
 
                         </div>
                         {currentAudioId === pageTitle.ID && (

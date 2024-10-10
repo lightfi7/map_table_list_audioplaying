@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import SubCategoriesList from "./SubCategoriesList";
 import downarrow from "../assets/down-arrow-svgrepo-com.svg";
 import { CategoriesServices } from "../services/CategoriesServices";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategory, getColor, getTextColor, setCategory, setTextColor, submitColor } from "../redux/themeSlice";
+import { getColor, getTextColor, setCategory, setColor, setTextColor, submitColor } from "../redux/themeSlice";
 
 const colors: string[] = [
     'magenta', '#ffdd62', '#e11325', '#71cdf1', '#f08757', '#0a998a', '#0a998a', 'blue', 'purple', 'pink', 'brown'
@@ -17,6 +17,7 @@ const textColors: string[] = [
 const CategoriesList: React.FC = (props: any) => {
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
+    const location = useLocation();
     const data = useSelector((state: any) => state.theme);
     const [isOpen, setIsOpen] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -30,9 +31,38 @@ const CategoriesList: React.FC = (props: any) => {
         CategoriesServices.getCategories()
             .then((data) => {
                 setUniqueData(Array.from(new Map(data.map((item: any) => [item.Maincategory, item])).values()))
+                console.log(location.pathname.replace("/", ''));
+                const items = Array.from(new Map(data.map((item: any) => [item.Maincategory, item])).values()).filter(it =>
+                    it.Maincategory == location.pathname.replace("/", "")
+                )
+                if (items.length > 0) {
+                    const item = items[0];
+                    if (Number(item.page) <= 142) {
+                        dispatch(setColor(colors[1]));
+                        dispatch(setTextColor(textColors[1]));
+                    }
+                    else if (Number(item.page) <= 250) {
+                        dispatch(setColor(colors[2]));
+                        dispatch(setTextColor(textColors[2]));
+                    }
+                    else if (Number(item.page) <= 334) {
+
+                        dispatch(setColor(colors[3]));
+                        dispatch(setTextColor(textColors[3]));
+                    }
+                    else if (Number(item.page) <= 358) {
+
+                        dispatch(setColor(colors[4]));
+                        dispatch(setTextColor(textColors[4]));
+                    }
+                    else {
+                        dispatch(setColor(colors[5]));
+                        dispatch(setTextColor(textColors[5]));
+                    }
+                }
             })
-            .catch(() => alert("Error fetching"));
-    }, [props.category]);
+            .catch((e) => console.log(e));
+    }, [dispatch, props.category]);
 
     // useEffect(() => {
     //     setSelectedCategory(data.category)
@@ -55,7 +85,7 @@ const CategoriesList: React.FC = (props: any) => {
     return (
         <div className="">
             {/* <Dropdown uniqueData={uniqueData} /> */}
-            <div className="relative text-center ">
+            <div className="relative text-center">
                 <div className="fixed top-0 w-full lg:w-[768px] md:w-[768px] z-30">
                     <div
                         style={{ backgroundColor: data?.color, color: data?.textColor }}
@@ -76,12 +106,12 @@ const CategoriesList: React.FC = (props: any) => {
 
                 {isOpen && (
                     <div
-                        className="origin-top-right z-50 absolute top-[-60px] w-full h-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        className="origin-top-right z-50 absolute top-[-60px] w-full h-full bg-blend-normal rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="menu-button"
                     >
-                        <div className="" role="none">
+                        <div className="h-screen bg-white bg-blend-overlay" role="none">
                             {uniqueData.map((item, index) => {
                                 var color = '#ffdd62';
                                 var textColor = '#8d8070';

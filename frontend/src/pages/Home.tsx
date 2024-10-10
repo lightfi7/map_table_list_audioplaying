@@ -8,7 +8,6 @@ import SlugCategoryList from '../components/SlugCategoryList';
 const HomePage = () => {
 
     const params = useParams();
-   
 
     return (
         <div className="flex flex-col h-full bg-white mb-40">
