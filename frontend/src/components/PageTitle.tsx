@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CategoriesServices } from "../services/CategoriesServices";
 import leftarrow from '../assets/left-arrow.svg';
-import playIcon from '../assets/play-icon.svg';
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, getColor } from "../redux/themeSlice";
 
