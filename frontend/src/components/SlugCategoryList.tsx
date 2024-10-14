@@ -127,6 +127,11 @@ const SlugCategoryList: React.FC = () => {
                 setIsPlaying(false);
                 return
             }
+            if(ap.currentTime != 0 && ap.currentTime < ap.duration && ap.paused){
+                ap.play();
+                setIsPlaying(true);
+                return
+            }
             setProgress(0);
             try {
                 setIsPlaying(true);
