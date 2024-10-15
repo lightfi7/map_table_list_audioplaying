@@ -197,12 +197,12 @@ const PageTitle: React.FC = () => {
                                     //     <rect x="6" y="4" width="4" height="16" fill="white" />
                                     //     <rect x="14" y="4" width="4" height="16" fill="white" />
                                     // </svg>
-                                    <img src="/icons/pause.png" alt="play" />
+                                    <img src="/icons/pause.png" alt="pause" />
                                 ) : (
                                     // <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     //     <path d="M8 5V19L19 12L8 5Z" fill="white" />
                                     // </svg>
-                                    <img src="/icons/play.png" alt="play" />
+                                    <img src="/icons/right-arrow.png" alt="play" />
                                 )}
                             </button>
                             {/* <img className="h-10 w-10 text-gray-700 cursor-pointer" src={playIcon} alt="Play Button" onClick={(e) => {
