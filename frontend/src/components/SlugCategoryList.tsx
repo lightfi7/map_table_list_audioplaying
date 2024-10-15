@@ -119,15 +119,15 @@ const SlugCategoryList: React.FC = () => {
         })
     }, [slug]);
 
-    const fetchAudio = async (audioName: string) => {
-        if (audioName) {
+    const fetchAudio = async (audioName_: string) => {
+        if (audioName_) {
             var ap = audio;
             if (ap.currentTime != 0 && ap.currentTime < ap.duration && !ap.paused) {
                 ap.pause();
                 setIsPlaying(false);
                 return
             }
-            if(ap.currentTime != 0 && ap.currentTime < ap.duration && ap.paused){
+            if (ap.currentTime != 0 && ap.currentTime < ap.duration && ap.paused && audioName_==audioName) {
                 ap.play();
                 setIsPlaying(true);
                 return
@@ -135,7 +135,7 @@ const SlugCategoryList: React.FC = () => {
             setProgress(0);
             try {
                 setIsPlaying(true);
-                ap.src = `http://176.10.111.19:8001/file/${audioName}.flac`
+                ap.src = `http://176.10.111.19:8001/file/${audioName_}.flac`
                 ap.load()
                 setError('');
             } catch (error) {
